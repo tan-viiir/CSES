@@ -20,33 +20,35 @@ typedef pair<int, int> pii;
 typedef pair<double, double> pdd;
 typedef vector<pii> vii;
  
-// Debug..
-#ifdef LOCAL
-#include "debug2.h"
+#ifndef ONLINE_JUDGE
+#include <bits/debug.h>
+#define dg(x) cerr << #x <<" "; _print(x); cerr << endl;
 #else
-#define debug(x...)
+#define dg(x)
 #endif
  
+const int mx = 1e6+123;
+vi pre(mx);
+bool vis[mx];
+ 
 void Solve() {
-    int n, x;
-    cin >> n >> x;
-    vi v(n);
-    vinput;
+    int n;
+    cin >> n;
     
-    sort(all(v));
-    int l = 0, r = n - 1, ans = 0;
-    while(l <= r){
-        if(v[l] + v[r] <= x){
-            ans++;
-            l++;
-            r--;
-        }
-        else{
-            ans++;
-            r--;
-        }
+    vector<pair<int, int>>events;
+    while(n--){
+        int x, y;
+        cin >> x >> y;
+        events.pb({x, 1});
+        events.pb({y, -1});
     }
-    cout << ans;
+    sort(all(events));
+    int mx = INT_MIN, cur = 0;
+    for(auto u: events){
+        cur += u.ss;
+        mx = max(mx, cur);
+    }
+    cout << mx;
 }
  
 int main() {

@@ -24,29 +24,29 @@ typedef vector<pii> vii;
 #ifdef LOCAL
 #include "debug2.h"
 #else
-#define debug(x...)
+#define dg(x...)
 #endif
  
 void Solve() {
-    int n, x;
-    cin >> n >> x;
+    int n;
+    cin >> n;
     vi v(n);
     vinput;
     
-    sort(all(v));
-    int l = 0, r = n - 1, ans = 0;
-    while(l <= r){
-        if(v[l] + v[r] <= x){
-            ans++;
-            l++;
-            r--;
+    vector<int>st;
+    st.pb(v[0]);
+    for(int i=1; i<n; i++){
+        auto up = upper_bound(all(st), v[i]);
+        if(up == st.end()){
+            st.pb(v[i]);
         }
         else{
-            ans++;
-            r--;
+            int idx = up - st.begin();
+            st[idx] = v[i];
         }
     }
-    cout << ans;
+    
+    cout << st.size();
 }
  
 int main() {

@@ -28,25 +28,17 @@ typedef vector<pii> vii;
 #endif
  
 void Solve() {
-    int n, x;
-    cin >> n >> x;
+    int n;
+    cin >> n;
     vi v(n);
     vinput;
     
     sort(all(v));
-    int l = 0, r = n - 1, ans = 0;
-    while(l <= r){
-        if(v[l] + v[r] <= x){
-            ans++;
-            l++;
-            r--;
-        }
-        else{
-            ans++;
-            r--;
-        }
+    ll ans = 0;
+    for(int i=0; i<n; i++){
+        ans += abs(v[i] - v[n/2]);
     }
-    cout << ans;
+    cout << ans << endl;
 }
  
 int main() {

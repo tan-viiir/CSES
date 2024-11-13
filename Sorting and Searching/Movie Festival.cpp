@@ -24,29 +24,33 @@ typedef vector<pii> vii;
 #ifdef LOCAL
 #include "debug2.h"
 #else
-#define debug(x...)
+#define dg(x...)
 #endif
  
+bool sort_by_second(const pair<int, int>& a, const pair<int, int>& b) {
+return a.ss < b.ss;
+}
+ 
 void Solve() {
-    int n, x;
-    cin >> n >> x;
-    vi v(n);
-    vinput;
+    int n;
+    cin >> n;
+    vector<pair<int, int>>p;
+    for(int i=0; i<n; i++){
+        int x, y;
+        cin >> x >> y;
+        p.push_back({x, y});
+    }
     
-    sort(all(v));
-    int l = 0, r = n - 1, ans = 0;
-    while(l <= r){
-        if(v[l] + v[r] <= x){
-            ans++;
-            l++;
-            r--;
-        }
-        else{
-            ans++;
-            r--;
+    sort(all(p), sort_by_second);
+    dg(p);
+    int cnt = 1, last = p[0].ss;
+    for(int i=1; i<n; i++){
+        if(last <= p[i].ff){
+            cnt++;
+            last = p[i].ss;
         }
     }
-    cout << ans;
+    cout << cnt;
 }
  
 int main() {

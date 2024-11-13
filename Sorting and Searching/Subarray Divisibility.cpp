@@ -5,14 +5,12 @@ using namespace std;
 #define ll long long
 #define ff first
 #define ss second
-#define sz size()
 #define pb push_back
 #define vinput for(auto& x: v) cin >> x;
 #define all(x) x.begin(),x.end()
 #define allr(x) x.rbegin(),x.rend()
-#define range(i,x,y) for(int i=x;i<y;i++)
-#define range_back(i,x,y) for(int i=y-1;i>=x;i--)
-#define mem(a,b) memset(a, b, sizeof(a) )
+#define range(i,x,y) for(int i=x;i<=y;i++)
+#define range_back(i,x,y) for(int i=y;i>=x;i--)
  
 typedef vector<int> vi;
 typedef vector<ll> vl;
@@ -20,33 +18,31 @@ typedef pair<int, int> pii;
 typedef pair<double, double> pdd;
 typedef vector<pii> vii;
  
-// Debug..
-#ifdef LOCAL
-#include "debug2.h"
+#ifndef ONLINE_JUDGE
+#include <bits/debug.h>
+#define dg(x) cerr << #x <<" "; _print(x); cerr << endl;
 #else
-#define debug(x...)
+#define dg(x)
 #endif
  
 void Solve() {
-    int n, x;
-    cin >> n >> x;
-    vi v(n);
+    int n;
+    cin >> n;
+    vl v(n);
     vinput;
     
-    sort(all(v));
-    int l = 0, r = n - 1, ans = 0;
-    while(l <= r){
-        if(v[l] + v[r] <= x){
-            ans++;
-            l++;
-            r--;
-        }
-        else{
-            ans++;
-            r--;
-        }
+    ll sum = 0;
+    vl cnt(n, 0);
+    for(auto u: v){
+        sum += (u % n + n) % n;
+        cnt[sum % n]++;
     }
-    cout << ans;
+    ll result = cnt[0];
+    for(auto u: cnt){
+        result += (u * (u-1)) / 2;
+    }
+    
+    cout << result << endl;
 }
  
 int main() {
